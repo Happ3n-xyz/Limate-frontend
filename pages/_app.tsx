@@ -39,6 +39,7 @@ export const minato = /*#__PURE__*/ defineChain({
     },
   },
   testnet: true,
+  iconUrl: 'https://picsum.photos/200' //TODO replace with the correct icon URL
 })
 
 const config = getDefaultConfig({

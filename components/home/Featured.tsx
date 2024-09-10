@@ -19,7 +19,7 @@ const Featured = () => {
   const router = useRouter()
   if (isConnected) {
     //go to myHaps page
-    router.push("/myHaps");
+    router.push("/home");
   }
 
   return (
@@ -29,13 +29,13 @@ const Featured = () => {
           <Image
             src={"images/logo.svg"}
             alt="happ3n logo"
-            height={400}
-            width={400}
+            height={120}
+            width={120}
           />
         </Center>
         <Center justifyContent={"center"}>
           <Text fontSize="60px" fontWeight="bold" textAlign="center" w={"50%"}>
-            {"Join Limate And enjoy meeting mates in your events"}
+            {"Join Haps! And engage your community"}
           </Text>
         </Center>
         <Center mt={16}>
