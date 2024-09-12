@@ -10,6 +10,7 @@ import FeaturedEvent from "../../components/cards/FeaturedEvent";
 import { PrivateGet, PublicFetch, PublicPost } from "../../src/utils/DataManagement";
 import { useUser } from "../../context/userContext";
 import ProfileCard from "../../components/home/ProfileCard";
+import BadgesSection from "../../components/home/BadgesSection";
 
 const Home = () => {
   const { isConnected, address } = useAccount();
@@ -125,49 +126,7 @@ const Home = () => {
         {user && <ProfileCard 
           user={user}
         />}
-        {featuredEvents && featuredEvents.length > 0 ? (
-          loading ? (
-            <Center h={"50vh"}>
-              <Text
-                fontSize="18px"
-                textAlign="center"
-                mt={2}
-                mb={10}
-                color={"white"}
-              >
-                Loading...
-              </Text>
-            </Center>
-          ) : (
-            <Center mt={100}>
-              <Grid
-                templateColumns={{
-                  base: "repeat(1, 1fr)",
-                  md: "repeat(3, minmax(0, 1fr))",
-                }}
-                gap={"30px"}
-                mb={10}
-              >
-                {featuredEvents.map((event, index) => (
-                  <div key={index} onClick={() => onClickEvent(event.id)}>
-                    <FeaturedEvent event={event} />
-                  </div>
-                ))}
-              </Grid>
-            </Center>
-          )
-        ) : (
-          <Text
-            fontSize="18px"
-            textAlign="center"
-            mt={20}
-            mb={10}
-            color={"white"}
-            w={"100%"}
-          >
-            No Haps to show.
-          </Text>
-        )}
+        <BadgesSection />
       </Box>
       <Text fontSize="18px" textAlign="center" mt={2} mb={10} color={"#666666"}>
         By Happ3n

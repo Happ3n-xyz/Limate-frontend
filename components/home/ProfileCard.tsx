@@ -52,11 +52,25 @@ const ProfileCard = ({ user }: Props) => {
               <Text fontSize="xl" fontWeight="bold">
                 {user.user?.username}
               </Text>
-
               <Flex>
-                <Image src="/images/home/LInlogo.png" alt="Linkedin Logo" boxSize="15px" mx={2} />
-                <Image src="/images/home/xLogo.png" alt="X Logo" boxSize="15px" mx={2} />
-                <Image src="/images/home/githubLogo.png" alt="Github Logo" boxSize="15px" mx={2} />
+                <Image
+                  src="/images/home/LInlogo.png"
+                  alt="Linkedin Logo"
+                  boxSize="15px"
+                  mx={2}
+                />
+                <Image
+                  src="/images/home/xLogo.png"
+                  alt="X Logo"
+                  boxSize="15px"
+                  mx={2}
+                />
+                <Image
+                  src="/images/home/githubLogo.png"
+                  alt="Github Logo"
+                  boxSize="15px"
+                  mx={2}
+                />
               </Flex>
             </Flex>
 
@@ -64,9 +78,11 @@ const ProfileCard = ({ user }: Props) => {
               {user.user?.about ?? 'This is the bio of the user'}
             </Text>
 
-            <Text fontSize="lg" fontWeight="bold" mt={2}>
-              Secret Pin:{' '}
-              <span style={{ color: '#00A3FF' }}>
+            <Text fontWeight="bold" mt={2}>
+              <Text as="span" color="textBrand" fontSize={12}>
+                Secret Pin:
+              </Text>{' '}
+              <span style={{ fontSize: '25px' }}>
                 {privateCode ?? 'Loading . . .'}
               </span>
             </Text>
