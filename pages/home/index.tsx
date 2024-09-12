@@ -9,6 +9,7 @@ import { Happ3nEvent } from "../../src/models/Event";
 import FeaturedEvent from "../../components/cards/FeaturedEvent";
 import { PrivateGet, PublicFetch, PublicPost } from "../../src/utils/DataManagement";
 import { useUser } from "../../context/userContext";
+import ProfileCard from "../../components/home/ProfileCard";
 
 const Home = () => {
   const { isConnected, address } = useAccount();
@@ -121,9 +122,9 @@ const Home = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <Box mt={"70px"} w={"100%"} h={"700px"}>
-        <Center justifyContent={"center"}>
-          
-        </Center>
+        {user && <ProfileCard 
+          user={user}
+        />}
         {featuredEvents && featuredEvents.length > 0 ? (
           loading ? (
             <Center h={"50vh"}>

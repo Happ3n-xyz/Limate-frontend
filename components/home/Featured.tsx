@@ -29,8 +29,8 @@ const Featured = () => {
           <Image
             src={"images/logo.svg"}
             alt="happ3n logo"
-            height={120}
-            width={120}
+            height={400}
+            width={400}
           />
         </Center>
         <Center justifyContent={"center"}>

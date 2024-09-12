@@ -1,15 +1,18 @@
 interface User {
-  isLogged: boolean;
-  token: string;
-  user?: UserInfo;
+  isLogged: boolean
+  token: string
+  user?: UserInfo
 }
 type UserInfo = {
-  address:string;
-  createdAt: string;
-  id: string;
-  isActive: boolean;
-  nonce: string;
-  publicName: string;
-  role: string;
-  username: string;
-};
+  id: string
+  username: string
+  profilePicture: string
+  badge: null
+  about: string
+  isActive: boolean
+  address: string
+  nonce: string
+  role: string
+  createdAt: string
+  updatedAt: string
+}

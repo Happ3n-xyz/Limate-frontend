@@ -11,6 +11,9 @@ const theme = extendTheme({
       100: "linear-gradient(180deg, #A2D6C7 3%, #53F6C6 82%)",
       200: "#53F6C6",
     },
+    card: {
+      border: "#A2D6C7",
+    },
     background: "#060606",
     primaryBackground: "#121212",
 
