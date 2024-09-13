@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import {
   Box,
   Button,
@@ -13,6 +13,7 @@ import {
 import BadgeCard from '../badge/Badge'
 import ModalAddMate from '../modals/ModalAddMate'
 import toast from 'react-hot-toast'
+import { PrivateGet, PrivatePost } from '../../src/utils/DataManagement'
 
 const myBadges = [
   {
@@ -40,11 +41,29 @@ const Mates = [
 const BadgesSection = () => {
   const [code, setCode] = useState('')
   const [username, setUsername] = useState('')
+  const [txHashAvax, setTxHashAvax] = useState('')
+  const [txHashMinato, setTxHashMinato] = useState('')
+  const [mateProfileImage, setMateProfileImage] = useState('')
+  const [mateAbout, setMateAbout] = useState('')
   const [selectedButton, setSelectedButton] = useState<'badges' | 'mates'>(
     'badges'
   )
   const [modalState, setModalState] = useState<'confirm' | 'loading' | 'verified'>('confirm')
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    const getMyBadges = async () => {
+      try {
+        const response = await PrivateGet('/users/limates')
+        console.log('my badges are',response);
+        
+      } catch (error) {
+        console.log('error on function ',error)
+      }
+    }
+    getMyBadges()
+  }, [])
+  
 
   const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCode(e.target.value)
@@ -56,6 +75,18 @@ const BadgesSection = () => {
     try {
       console.log('confirming');
       setModalState('loading')
+      const response = await PrivatePost('/users/limates', {
+        "code": code,
+        "username": username
+      })
+      console.log('response is', response);
+      console.log('minato hash is', response.txHashAvax);
+      console.log('minato hash is', response.txHashMinato);
+      setTxHashAvax(response.txHashAvax)
+      setTxHashMinato(response.txHashMinato)
+      setMateProfileImage(response.profilePicture)
+      setMateAbout(response.about)
+      setModalState('verified')
     } catch (error) {
       console.log('error on function ',error)
     }
@@ -174,6 +205,10 @@ const BadgesSection = () => {
         code={code}
         handleConfirm={onConfirm}
         modalState={modalState}
+        txHashAvax={txHashAvax}
+        txHashMinato={txHashMinato}
+        profileImageUrl={mateProfileImage}
+        about={mateAbout}
       />
     </Fragment>
   )

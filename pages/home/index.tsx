@@ -118,8 +118,8 @@ const Home = () => {
   return (
     <Fragment>
       <Head>
-        <title>My Haps - By Happ3n</title>
-        <meta name="Haps by happ3n" />
+        <title>My Mates - By Happ3n</title>
+        <meta name="Limates by happ3n" />
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <Box mt={"70px"} w={"100%"} h={"700px"}>

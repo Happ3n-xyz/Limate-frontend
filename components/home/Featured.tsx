@@ -18,7 +18,7 @@ const Featured = () => {
   const { isConnected } = useAccount()
   const router = useRouter()
   if (isConnected) {
-    //go to myHaps page
+    //go to limate page
     router.push("/home");
   }
 
@@ -35,7 +35,7 @@ const Featured = () => {
         </Center>
         <Center justifyContent={"center"}>
           <Text fontSize="60px" fontWeight="bold" textAlign="center" w={"50%"}>
-            {"Join Haps! And engage your community"}
+            {"Join Limate! And engage your community"}
           </Text>
         </Center>
         <Center mt={16}>

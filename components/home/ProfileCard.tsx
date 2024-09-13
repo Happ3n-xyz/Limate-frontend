@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Image, Text, Grid, Center, Flex } from '@chakra-ui/react'
 import toast from 'react-hot-toast'
+import axios from 'axios'
+import { PrivateGet } from '../../src/utils/DataManagement'
 
 type Props = {
   user: User
@@ -12,7 +14,10 @@ const ProfileCard = ({ user }: Props) => {
   useEffect(() => {
     const getPrivateCode = async () => {
       try {
-        //TODO fetch the code and setPrivateCode with the response
+        console.log('getting private code');
+        const response = await PrivateGet('/users/code')
+        console.log('user code is',response);
+        setPrivateCode(response.code)
       } catch (error) {
         console.log(error)
         toast.error('Failed to get private code')
