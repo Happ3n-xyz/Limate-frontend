@@ -38,7 +38,7 @@ const ProfileCard = ({ user }: Props) => {
           gap={4}
           alignItems="center"
         >
-          <Box w="100%" h="120px" overflow="hidden" borderRadius="md">
+          <Box w="100px" h="100px" overflow="hidden" borderRadius="md">
             <Image
               src={user.user?.profilePicture ?? 'https://picsum.photos/200'}
               alt="Profile Image"
