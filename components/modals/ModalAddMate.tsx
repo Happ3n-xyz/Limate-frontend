@@ -106,7 +106,7 @@ const ModalAddMate = ({
                 <Image
                   borderRadius="full"
                   boxSize="100px"
-                  src={profileImageUrl}
+                  src={profileImageUrl ?? 'https://picsum.photos/200'}
                   alt={username}
                 />
               </Center>

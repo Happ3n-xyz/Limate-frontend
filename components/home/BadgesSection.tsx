@@ -14,28 +14,18 @@ import BadgeCard from '../badge/Badge'
 import ModalAddMate from '../modals/ModalAddMate'
 import toast from 'react-hot-toast'
 import { PrivateGet, PrivatePost } from '../../src/utils/DataManagement'
+import { Badge } from '../../src/models/Badge'
 
 const myBadges = [
   {
-    name: 'ETH Mexico 2024',
-    image: '/images/events/eth-mexico-2024.png',
-  },
-]
-const Mates = [
-  {
-    name: 'Mate 1',
-    userName: 'mate1',
-    image: '/images/events/eth-mexico-2024.png',
-  },
-  {
-    name: 'Mate 2',
-    userName: 'mate2',
-    image: '/images/events/eth-mexico-2024.png',
-  },
-  {
-    name: 'Mate 3',
-    userName: 'mate3',
-    image: '/images/events/eth-mexico-2024.png',
+    username: 'ETH Mexico 2024',
+    profilePicture: '/images/events/eth-mexico-2024.png',
+    about: 'This is my bio',
+    badge: 'ETH Mexico 2024',
+    id: '11110000222',
+    txHashAvax: '0x0000000000000',
+    txHashMinato: '0x0000000000000',
+    userId: '11110000222'
   },
 ]
 const BadgesSection = () => {
@@ -45,6 +35,7 @@ const BadgesSection = () => {
   const [txHashMinato, setTxHashMinato] = useState('')
   const [mateProfileImage, setMateProfileImage] = useState('')
   const [mateAbout, setMateAbout] = useState('')
+  const [badges, setBadges] = useState<Badge[] | null>(null)
   const [selectedButton, setSelectedButton] = useState<'badges' | 'mates'>(
     'badges'
   )
@@ -56,7 +47,7 @@ const BadgesSection = () => {
       try {
         const response = await PrivateGet('/users/limates')
         console.log('my badges are',response);
-        
+        setBadges(response)
       } catch (error) {
         console.log('error on function ',error)
       }
@@ -186,15 +177,15 @@ const BadgesSection = () => {
               </Button>
             </Flex>
 
-            <Flex justifyContent="space-around">
+            {badges && <Flex justifyContent="space-around">
               {selectedButton === 'badges'
                 ? myBadges.map((badge) => (
-                    <BadgeCard key={badge.name} badge={badge} />
+                    <BadgeCard key={badge.id} badge={badge} />
                   ))
-                : Mates.map((mate) => (
-                    <BadgeCard key={mate.name} badge={mate} />
+                : badges.map((mate) => (
+                    <BadgeCard key={mate.id} badge={mate} />
                   ))}
-            </Flex>
+            </Flex>}
           </Box>
         </Grid>
       </Box>

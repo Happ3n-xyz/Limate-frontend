@@ -1,12 +1,9 @@
 import { Box, Image, Text } from '@chakra-ui/react'
 import React from 'react'
+import { Badge } from '../../src/models/Badge'
 
 type Props = {
-  badge: {
-    name: string
-    image: string
-    userName?: string
-  }
+  badge: Badge
 }
 
 const BadgeCard = ({ badge }: Props) => {
@@ -19,7 +16,7 @@ const BadgeCard = ({ badge }: Props) => {
       alignItems="center"
     >
       <Image
-        src={badge.image ?? "https://picsum.photos/200"}
+        src={badge.profilePicture ?? "https://picsum.photos/200"}
         alt="Badge 1"
         boxSize="80px"
         borderRadius="20px"
@@ -32,12 +29,12 @@ const BadgeCard = ({ badge }: Props) => {
         maxW="80%"
         mx="auto"
       >
-        {badge.name}
+        {badge.username}
       </Text>
 
-      {badge.userName && (
+      {badge.username && (
         <Text color="gray.400" mx="auto">
-          @{badge.userName}
+          @{badge.username}
         </Text>
       )}
     </Box>
