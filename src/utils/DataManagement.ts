@@ -11,6 +11,8 @@ export const PublicFetch = async (url: string) => {
 }
 export const PublicPost = async (url: string, data: any) => {
   try {
+    console.log('data in public post is', data);
+    
     const response = await axios.post(process.env.NEXT_PUBLIC_SERVER_URL_USER + url, data);
     return response.data;
   } catch (error) {

@@ -11,19 +11,20 @@ import { PrivateGet, PublicFetch, PublicPost } from "../../src/utils/DataManagem
 import { useUser } from "../../context/userContext";
 import ProfileCard from "../../components/home/ProfileCard";
 import BadgesSection from "../../components/home/BadgesSection";
+import { SiweMessage } from "siwe";
 
 const Home = () => {
-  const { isConnected, address } = useAccount();
+  const { isConnected, address, chainId } = useAccount();
   const { user, setUser } = useUser();
   const [featuredEvents, setFeaturedEvents] = useState<Happ3nEvent[] | null>(
     null
   );
   const [selectedButton, setSelectedButton] = useState("explore");
-  const [nonce, setNonce] = useState<string | null>(null);
+  // const [nonce, setNonce] = useState<string | null>(null);
   const [getToken, setGetToken] = useState(false);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const { signMessage, data } = useSignMessage();
+  const { signMessage } = useSignMessage();
 
   //Login check /////////////////////////////
   useEffect(() => {
@@ -35,7 +36,7 @@ const Home = () => {
   useEffect(() => {
     if (!isConnected) return;
     const token = localStorage.getItem("token");
-    
+    console.log('token', token);
     if (!token || token === undefined) {
       getNonce();
     } else {
@@ -43,10 +44,10 @@ const Home = () => {
     }
   }, [isConnected, getToken]);
 
-  useEffect(() => {
-    if (!data) return;
-    loginUser(data);
-  }, [signMessage, data]);
+  // useEffect(() => {
+  //   if (!data) return;
+  //   loginUser(data);
+  // }, [signMessage, data]);
 
   const getNonce = async () => {
     try {
@@ -55,10 +56,42 @@ const Home = () => {
       const response = await PublicPost("/auth/request-nonce", {
         address: address,
       });
-      console.log("response", response);
+      console.log("response nonce is", response);
+      if(!response?.nonce) {
+        toast.error(
+          "An error occurred while trying to login. Please try again later."
+        );
+        return;
+      }
+      console.log("response nonce is", response);
+      // setNonce(response.nonce);
+      const message = new SiweMessage({
+        domain: document.location.host,
+        address: address,
+        chainId: chainId,
+        uri: document.location.origin,
+        version: '1',
+        statement: 'Sign this to log in at Limate',
+        nonce: response.nonce,
+      });
+      console.log('prev to sign message');
+      console.log('message is', message);
       
-      setNonce(response.nonce);
-      signMessage({ message: response.nonce });
+      signMessage(
+        { message: message.prepareMessage() },
+        {
+          onSuccess: async (signature) => {
+            console.log('signature is', signature);
+            loginUser(signature, message, response.nonce);
+          },
+          onError: (error) => {
+            console.log('error on sign message', error);
+            toast.error(
+              "An error occurred while trying to login. Please try again later."
+            );
+          },
+        }
+      );
     } catch (error) {
       toast.error(
         "An error occurred while trying to login. Please tsry again later."
@@ -82,14 +115,19 @@ const Home = () => {
       );
     }
   };
-  const loginUser = async (data: any) => {
+  const loginUser = async (signature: string, message: SiweMessage, nonce: string) => {
     try {
       const body = {
         address: address,
-        nonce: nonce ?? "",
-        signature: data,
+        nonce: nonce,
+        signature,
+        message
       };
+      console.log('nonce is', nonce);
+      console.log('body in login request is', body);
       const response = await PublicPost("/auth/login-user", body);
+      console.log('response login is', response);
+      
       localStorage.setItem("token", response.token);
       setUser({
         isLogged: true,
