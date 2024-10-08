@@ -25,7 +25,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const { signMessage } = useSignMessage();
-
+  let nonceRequested = false;
   //Login check /////////////////////////////
   useEffect(() => {
     if (!isConnected) {
@@ -35,27 +35,24 @@ const Home = () => {
 
   useEffect(() => {
     if (!isConnected) return;
-    const token = localStorage.getItem("token");
-    console.log('token', token);
-    if (!token || token === undefined) {
-      getNonce();
-    } else {
-      verifyToken();
-    }
-  }, [isConnected, getToken]);
+      const token = localStorage.getItem("token");
+      console.log('token', token);
+      if (!token || token === undefined) {
+        getNonce();
+      } else {
+        verifyToken();
+      }
+  }, [isConnected]);
 
-  // useEffect(() => {
-  //   if (!data) return;
-  //   loginUser(data);
-  // }, [signMessage, data]);
 
   const getNonce = async () => {
     try {
       console.log("getNonce");
-      
+      if(nonceRequested) return;
       const response = await PublicPost("/auth/request-nonce", {
         address: address,
       });
+      nonceRequested = true;
       console.log("response nonce is", response);
       if(!response?.nonce) {
         toast.error(
@@ -64,7 +61,6 @@ const Home = () => {
         return;
       }
       console.log("response nonce is", response);
-      // setNonce(response.nonce);
       const message = new SiweMessage({
         domain: document.location.host,
         address: address,
@@ -76,7 +72,6 @@ const Home = () => {
       });
       console.log('prev to sign message');
       console.log('message is', message);
-      
       signMessage(
         { message: message.prepareMessage() },
         {
@@ -107,9 +102,10 @@ const Home = () => {
         user: response.user,
       });
       toast.success("You have been logged in successfully.");
+      setLoading(false);
     } catch (error) {
       localStorage.removeItem("token");
-      getNonce();
+      // getNonce();
       toast.error(
         "An error occurred while trying to login. Please try again later."
       );
@@ -136,6 +132,7 @@ const Home = () => {
       });
       setGetToken(!getToken);
       toast.success("You have been logged in successfully.");
+      setLoading(false);
     } catch (error) {
       toast.error(
         "An error occurred while trying to login. Please try again later."
@@ -153,6 +150,15 @@ const Home = () => {
     }
   };
 
+  if(loading) {
+    return (
+      <Box mt={"70px"} w={"100%"} h={"700px"}>
+          <Center>
+          <Text>Loading...</Text>
+      </Center>
+        </Box>
+    );
+  }
   return (
     <Fragment>
       <Head>

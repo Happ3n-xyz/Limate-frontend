@@ -24,7 +24,7 @@ export const PrivateGet = async (url: string) => {
   try {
     const token = localStorage.getItem('token');
     if (!token) {
-      throw new Error('Token not found');
+      return null;
     }
     const response = await axios.get(process.env.NEXT_PUBLIC_SERVER_URL_USER + url, {
       headers: {

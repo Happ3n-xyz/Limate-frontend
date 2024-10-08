@@ -39,6 +39,7 @@ const Featured = () => {
       handleError(error);
     }
   };
+  
   const handleSuccess = (_address: string) => {
     localStorage.setItem('smartAddress', _address);
     window.location.reload();
