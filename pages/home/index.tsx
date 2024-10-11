@@ -53,7 +53,6 @@ const Home = () => {
         address: address,
       });
       nonceRequested = true;
-      console.log("response nonce is", response);
       if(!response?.nonce) {
         toast.error(
           "An error occurred while trying to login. Please try again later."

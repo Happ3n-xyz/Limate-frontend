@@ -39,7 +39,11 @@ export const PrivateGet = async (url: string) => {
 }
 export const PrivatePost = async (url: string, data: any) => {
   try {
+    console.log('data in private post is', data);
+    
     const token = localStorage.getItem('token');
+    console.log('token in private post is', token);
+    
     if (!token) {
       throw new Error('Token not found');
     }
@@ -50,7 +54,7 @@ export const PrivatePost = async (url: string, data: any) => {
     });
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.error('error in the axios request is ....',error);
     throw error;
   }
 }

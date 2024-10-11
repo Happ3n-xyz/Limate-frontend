@@ -6,7 +6,6 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Spinner,
@@ -22,8 +21,7 @@ type Props = {
   code: string
   handleConfirm: () => void
   modalState: 'confirm' | 'loading' | 'verified'
-  txHashAvax: string
-  txHashMinato: string
+  txHash: string
   profileImageUrl: string
   about: string
 }
@@ -35,8 +33,7 @@ const ModalAddMate = ({
   code,
   handleConfirm,
   modalState,
-  txHashAvax,
-  txHashMinato,
+  txHash,
   profileImageUrl,
   about,
 }: Props) => {
@@ -131,6 +128,14 @@ const ModalAddMate = ({
               >
                 {about}
               </Text>
+              <Button
+                colorScheme="green"
+                mt={6}
+                onClick={() => { window.open(`${process.env.NEXT_PUBLIC_EAS_ATTESTATION_EXPLORER_URL}${txHash}`) }} 
+                width="100%"
+              >
+                View Attestation
+              </Button>
 
               <Button colorScheme="green" mt={6} onClick={onClose} width="100%">
                 Close

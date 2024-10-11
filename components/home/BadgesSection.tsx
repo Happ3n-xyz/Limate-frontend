@@ -18,21 +18,19 @@ import { Badge } from '../../src/models/Badge'
 
 const myBadges = [
   {
-    username: 'ETH Mexico 2024',
-    profilePicture: '/images/events/eth-mexico-2024.png',
+    username: 'BASE LATAM 2024',
+    profilePicture: '/images/events/Based.jpeg',
     about: 'This is my bio',
-    badge: 'ETH Mexico 2024',
+    badge: 'Base Buildathon Latam 2024',
     id: '11110000222',
-    txHashAvax: '0x0000000000000',
-    txHashMinato: '0x0000000000000',
+    txHash: '0x0000000000000',
     userId: '11110000222'
   },
 ]
 const BadgesSection = () => {
   const [code, setCode] = useState('')
   const [username, setUsername] = useState('')
-  const [txHashAvax, setTxHashAvax] = useState('')
-  const [txHashMinato, setTxHashMinato] = useState('')
+  const [txHash, setTxHash] = useState('')
   const [mateProfileImage, setMateProfileImage] = useState('')
   const [mateAbout, setMateAbout] = useState('')
   const [badges, setBadges] = useState<Badge[] | null>(null)
@@ -66,15 +64,14 @@ const BadgesSection = () => {
     try {
       console.log('confirming');
       setModalState('loading')
+      //Create new Limate/Attestation
       const response = await PrivatePost('/users/limates', {
         "code": code,
         "username": username
       })
       console.log('response is', response);
-      console.log('minato hash is', response.txHashAvax);
-      console.log('minato hash is', response.txHashMinato);
-      setTxHashAvax(response.txHashAvax)
-      setTxHashMinato(response.txHashMinato)
+      console.log('minato hash is', response.txHash);
+      setTxHash(response.txHash)
       setMateProfileImage(response.profilePicture)
       setMateAbout(response.about)
       setModalState('verified')
@@ -196,8 +193,7 @@ const BadgesSection = () => {
         code={code}
         handleConfirm={onConfirm}
         modalState={modalState}
-        txHashAvax={txHashAvax}
-        txHashMinato={txHashMinato}
+        txHash={txHash}
         profileImageUrl={mateProfileImage}
         about={mateAbout}
       />

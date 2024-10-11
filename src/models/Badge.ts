@@ -5,8 +5,7 @@ export type Badge = {
   createdAt?: string
   id: string
   profilePicture: string | null
-  txHashAvax: string
-  txHashMinato: string
+  txHash: string
   updatedAt?: string
   userId: string
   username: string

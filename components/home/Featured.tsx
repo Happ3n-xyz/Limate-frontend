@@ -26,7 +26,7 @@ const Featured = () => {
     try {
       const sdk = new CoinbaseWalletSDK({
         appName: process.env.NEXT_PUBLIC_COINBASE_APP_NAME,
-        appLogoUrl: 'https://limate-frontend-nsja.vercel.app/',
+        appLogoUrl: 'https://picsum.photos/200',
         appChainIds: [chainId ?? 84532],
       });
       const provider = sdk.makeWeb3Provider();
